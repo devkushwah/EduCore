@@ -1,1 +1,1 @@
-# EduCore
+# EduCore - An EdTech Platform

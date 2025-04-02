@@ -12,6 +12,7 @@ const {
   getFullCourseDetails,
   editCourse,
   getInstructorCourses,
+  deleteCourse,
 } = require("../controllers/Course")
 
 
@@ -39,6 +40,9 @@ router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 
 // Get all Courses Under a Specific Instructor
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
+
+// Delete a Course
+router.delete("/deleteCourse", deleteCourse)
 
 
 

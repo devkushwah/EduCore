@@ -11,6 +11,7 @@ const {
   getCourseDetails,
   getFullCourseDetails,
   editCourse,
+  getInstructorCourses,
 } = require("../controllers/Course")
 
 
@@ -35,6 +36,9 @@ router.post("/editCourse", auth, isInstructor, editCourse)
 
 // Get Details for a Specific Courses
 router.post("/getFullCourseDetails", auth, getFullCourseDetails)
+
+// Get all Courses Under a Specific Instructor
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 
 
 

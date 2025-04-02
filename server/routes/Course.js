@@ -9,6 +9,7 @@ const {
   createCourse,
   getAllCourses,
   getCourseDetails,
+  getFullCourseDetails,
   editCourse,
 } = require("../controllers/Course")
 
@@ -31,6 +32,9 @@ router.post("/getCourseDetails", getCourseDetails)
 
 // Edit Course routes
 router.post("/editCourse", auth, isInstructor, editCourse)
+
+// Get Details for a Specific Courses
+router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 
 
 

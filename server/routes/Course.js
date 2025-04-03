@@ -40,6 +40,11 @@ const {
 } = require("../controllers/Subsection")
 
 
+const {
+  updateCourseProgress
+} = require("../controllers/courseProgress");
+
+
 
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
@@ -85,6 +90,9 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
 
 // Add a Sub Section to a Section
 router.post("/addSubSection", auth, isInstructor, createSubSection)
+
+router.post("/updateCourseProgress", auth, isStudent,  updateCourseProgress);
+
 
 
 // ********************************************************************************************************

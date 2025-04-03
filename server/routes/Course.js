@@ -32,6 +32,14 @@ const {
 } = require("../controllers/Section")
 
 
+// Sub-Sections Controllers Import
+const {
+  createSubSection,
+  updateSubSection,
+  deleteSubSection,
+} = require("../controllers/Subsection")
+
+
 
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
@@ -68,6 +76,15 @@ router.post("/updateSection", auth, isInstructor, updateSection)
 
 // Delete a Section
 router.post("/deleteSection", auth, isInstructor, deleteSection)
+
+// Edit Sub Section
+router.post("/updateSubSection", auth, isInstructor, updateSubSection)
+
+// Delete Sub Section
+router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
+
+// Add a Sub Section to a Section
+router.post("/addSubSection", auth, isInstructor, createSubSection)
 
 
 // ********************************************************************************************************

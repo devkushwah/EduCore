@@ -16,6 +16,14 @@ const {
 } = require("../controllers/Course")
 
 
+// Categories Controllers Import
+const {
+  showAllCategories,
+  createCategory,
+  categoryPageDetails,
+} = require("../controllers/Category")
+
+
 
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
@@ -43,6 +51,16 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 
 // Delete a Course
 router.delete("/deleteCourse", deleteCourse)
+
+
+// ********************************************************************************************************
+//                                      Category routes (Only by Admin)
+// ********************************************************************************************************
+// Category can Only be Created by Admin
+// TODO: Put IsAdmin Middleware here
+router.post("/createCategory", auth, isAdmin, createCategory)
+router.get("/showAllCategories", showAllCategories)  
+router.post("/getCategoryPageDetails", categoryPageDetails) 
 
 
 

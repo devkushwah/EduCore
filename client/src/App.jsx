@@ -16,6 +16,7 @@ function App() {
 
         {/* Homepage route */}
         <Route path="/" element={<Home/>}/> 
+        
 
 
      </Routes>

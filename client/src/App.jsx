@@ -5,8 +5,7 @@ import Home from "./Pages/Home"
 import OpenRoute from "./components/core/Auth/OpenRoute"
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-
-
+import ForgotPassword from "./Pages/ForgotPassword";
 
 
 
@@ -41,6 +40,15 @@ function App() {
           element={ 
              <OpenRoute>
                <Signup />
+             </OpenRoute>
+          }
+        />
+
+        <Route
+          path="forgot-password"
+          element={ 
+             <OpenRoute>
+               <ForgotPassword />
              </OpenRoute>
           }
         />

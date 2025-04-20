@@ -17,6 +17,8 @@ import { ACCOUNT_TYPE } from "./utils/constants";
 import MyProfile from "./components/core/Dashboard/MyProfile";
 import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart";
+
 
 
 
@@ -118,6 +120,15 @@ function App() {
       <Route path="dashboard/Settings" element={<Settings />} />
 
       <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+
+      {
+        user?.accountType === ACCOUNT_TYPE.STUDENT && (
+          <>
+          <Route path="dashboard/cart" element={<Cart />} />
+          
+          </>
+        )
+      }
 
   
 

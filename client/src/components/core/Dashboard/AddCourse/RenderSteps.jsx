@@ -23,7 +23,7 @@ export default function RenderSteps() {
       id: 2,
       title: "Course Builder",
     },
-    {
+    {  
       id: 3,
       title: "Publish",
     },

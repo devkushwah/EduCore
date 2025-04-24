@@ -18,7 +18,9 @@ import MyProfile from "./components/core/Dashboard/MyProfile";
 import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
-import AddCourse from "./components/core/Dashboard/AddCourse";
+import AddCourse from "./components/core/Dashboard/AddCourse"; 
+import EditCourse from "./components/core/Dashboard/EditCourse";
+
 
 
 
@@ -140,6 +142,9 @@ function App() {
           <>
           {/* <Route path="dashboard/instructor" element={<Instructor />} /> */}
           <Route path="dashboard/add-course" element={<AddCourse />} /> 
+          <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
+
+          
           
           
           </>

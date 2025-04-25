@@ -21,6 +21,8 @@ import Cart from "./components/core/Dashboard/Cart";
 import AddCourse from "./components/core/Dashboard/AddCourse"; 
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
+import ViewCourse from "./Pages/ViewCourse";
+
 
 
 
@@ -157,7 +159,15 @@ function App() {
 
     </Route>
 
+    {/*ViewCourse  */}
+       <Route element={
+        <PrivateRoute>
+          <ViewCourse />
+        </PrivateRoute>
+      }>
 
+
+    </Route>
 
      </Routes>
 

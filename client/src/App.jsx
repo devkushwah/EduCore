@@ -22,16 +22,10 @@ import AddCourse from "./components/core/Dashboard/AddCourse";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 import ViewCourse from "./Pages/ViewCourse";
-
-
-
-
-
-
-
-
-
-
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+import Catalog from "./Pages/Catalog";
+import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import CourseDetails from "./Pages/CourseDetails";
 
 
 
@@ -51,6 +45,10 @@ function App() {
 
         {/* Homepage route */}
         <Route path="/" element={<Home/>}/> 
+        <Route path="catalog/:catalogName" element={<Catalog/>} /> 
+        <Route path="courses/:courseId" element={<CourseDetails/>} />
+
+
 
            {/* Login Page Route */}
            <Route
@@ -147,6 +145,7 @@ function App() {
           <Route path="dashboard/add-course" element={<AddCourse />} /> 
           <Route path="dashboard/my-courses" element={<MyCourses />} />
           <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
+          <Route path="dashboard/instructor" element={<Instructor />} />
 
           
           
@@ -166,6 +165,17 @@ function App() {
         </PrivateRoute>
       }>
 
+{
+        user?.accountType === ACCOUNT_TYPE.STUDENT && (
+          <>
+          <Route 
+            path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+            element={<VideoDetails />}
+          />
+          </>
+        )
+      }
+
 
     </Route>
 
@@ -175,5 +185,5 @@ function App() {
    </div>
   );
 }
-
+  
 export default App;

@@ -23,8 +23,8 @@ exports.auth = async (req, res, next) => {
         // Remove any quotes from the token if present
         const cleanToken = token?.replace(/^["'](.*)["']$/, '$1');
 
-        console.log("Extracted Token:", token);
-        console.log("Cleaned Token:", cleanToken);
+        // console.log("Extracted Token:", token);
+        // console.log("Cleaned Token:", cleanToken);
         
         // If JWT is missing, return 401 Unauthorized response
         if (!cleanToken) {

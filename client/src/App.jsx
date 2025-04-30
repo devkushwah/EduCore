@@ -26,6 +26,8 @@ import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Catalog from "./Pages/Catalog";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import CourseDetails from "./Pages/CourseDetails";
+import Error from "./Pages/Error"
+
 
 
 
@@ -124,7 +126,6 @@ function App() {
 
       <Route path="dashboard/Settings" element={<Settings />} />
 
-      <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
 
       {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
@@ -178,6 +179,9 @@ function App() {
 
 
     </Route>
+
+    <Route path="*" element={<Error />} />
+
 
      </Routes>
 

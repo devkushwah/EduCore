@@ -11,6 +11,12 @@ const MyProfile = () => {
   const { user } = useSelector((state) => state.profile)
   const navigate = useNavigate()
 
+  // for testing purposes, we can use console.log to check if the user is logged in or not
+  const handleEditClick = () => {
+    console.log("Navigating to settings...");
+    navigate("/dashboard/settings");
+  };
+
   return (
     <>
       {/* Heading of my profile */}
@@ -40,7 +46,8 @@ const MyProfile = () => {
         {/* Icon Button for Edit */}
         <IconBtn
           text="Edit"
-          onClick={() => navigate("/dashboard/settings")}
+          onClick={handleEditClick}
+          // onClick={() => navigate("/dashboard/settings")}
         >
           <RiEditBoxLine />
         </IconBtn>

@@ -16,18 +16,17 @@ const Home = () => {
     
     <div>
       {/* Section 1 */}
-      <div className="relative mx-auto flex flex-col w-11/12 text-white justify-between items-center max-w-maxContent">
+      <div className="relative mx-auto flex flex-col w-11/12 text-white justify-between items-center max-w-maxContent gap-8">
 
       
       {/* Button Section */}
         <Link to={"/signup"}>
           <div
-            className="group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-100
-            transition-all duration-200 hover:scale-95 w-fit">
+            className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-bold text-richblack-200 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-200 hover:scale-95 hover:drop-shadow-none">
 
+       {/* Become a Instructor Button */}
             <div
-              className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px]
-              transition-all duration-200 group-hover:bg-richblack-900" >
+              className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900" >
               <p>Become an Instructor</p>
               <FaArrowRight />
             </div>
@@ -36,20 +35,22 @@ const Home = () => {
           </div>
         </Link>
 
-        {/* Text Part */}
-        <div className="text-center text-4xl font-semibold mt-7">
+        {/* Heading */}
+        <div className="text-center text-4xl font-semibold">
           Empower Your Future With <HighlightText text={"Coding Skills"} />
         </div>
 
-        <div className="mt-6 w-[90%] text-center text-lg font-bold text-richblack-200">
+        {/* Sub Heading */}
+        <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
         With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
           instructors.
         </div>
 
+        {/* CTA Buttons */}
         {/* Two Buttons Black and Yellow Button Part */}
-        <div className="flex flex-row gap-7 mt-8">
+        <div className="mt-8 flex flex-row gap-7">
           <CTAButton active={true} linkto={"/signup"}>
             Learn More
           </CTAButton>
@@ -59,6 +60,7 @@ const Home = () => {
           </CTAButton>
         </div>
 
+        {/* Video */}
         <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
           <video
             className="shadow-[20px_20px_rgba(255,255,255)]"
@@ -105,7 +107,7 @@ const Home = () => {
           <CodeBlocks
             position={"lg:flex-row-reverse"}  
             heading={
-              <div className="text-4xl font-semibold">
+              <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
                 Unlock your <HighlightText text={"coding potential"} /> with our
                 online courses.
               </div>
@@ -136,15 +138,15 @@ const Home = () => {
       {/* Section 2 */}
       <div className="bg-pure-greys-5 text-richblack-700">
             {/* Part 1 */}
-            <div className="homepage_bg h-[310px]">
+            <div className="homepage_bg h-[320px]">
+             {/* Explore Full Catagory Section */}
+                    <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+                        <div className="lg:h-[150px]"></div>
 
-                    <div className="w-11/12 max-w-maxContent flex flex-col items-center gap-5 mx-auto ">
-                        <div className="h-[200px]"></div>
-
-                        <div className="flex flex-row gap-7 text-white">
+                        <div className="flex flex-row gap-7 text-white lg:mt-8">
                             
                                 <CTAButton active={true} linkto={"/signup"}>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
                                     Explore Full Catalog
                                     <FaArrowRight/>
                                 </div>
@@ -160,15 +162,15 @@ const Home = () => {
             </div>
 
             {/* Part - 2 */}
-            <div className="w-11/12 max-w-maxContent flex flex-col items-center gap-7 mx-auto">
+            <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
 
-                <div className="flex flex-row gap-5 mb-10 mt-[95px]">
-                    <div className="text-4xl font-semibold w-[45%]">
+                <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
+                    <div className="text-4xl font-semibold lg:w-[45%]">
                         Get the Skills you need for a
                         <HighlightText text={"Job that is in demand"}/>
                     </div>
 
-                    <div className="flex flex-col gap-10  items-start w-[40%]">
+                    <div className="flex flex-col gap-10  items-start lg:w-[40%]">
                         <div className="text-[16px]">
                             Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love.
                         </div>
@@ -190,10 +192,9 @@ const Home = () => {
       </div>
 
       {/* Section - 3 */}
-      <div className="w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-8 bg-richblack-900
-                       text-white mx-auto my-20">
+      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
           <InstructorSection />
-          <h2 className="text-4xl font-semibold text-center mt-10">
+          <h2 className="text-4xl font-semibold text-center mt-8">
             Reviews from Other Learners
           </h2>
       </div>    

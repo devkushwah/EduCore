@@ -19,6 +19,12 @@ function Navbar() {
 
   const [subLinks, setSubLinks] = useState([])
   const [loading, setLoading] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false)
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev)
+  }
 
   useEffect(() => {
     (async () => {
@@ -49,7 +55,7 @@ function Navbar() {
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
         <Link to="/">
-          <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
+          <img src={logo} alt="Logo" width={120} height={24} loading="lazy" />
         </Link>
         {/* Navigation links */}
         <nav className="hidden md:block">
@@ -113,8 +119,103 @@ function Navbar() {
             ))}
           </ul>
         </nav>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="fixed top-0 left-0 z-50 w-full h-screen bg-transparent backdrop-blur-md p-6 overflow-y-auto md:hidden">
+            {/* Close Icon */}
+            <button
+              className="absolute top-4 right-4 text-2xl text-yellow-300"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              ✖
+            </button>
+            <ul className="flex flex-col items-center gap-y-12 text-richblack-25">
+              {NavbarLinks.map((link, index) => (
+                <li key={index}>
+                  {link.title === "Catalog" ? (
+                    <>
+                      <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setIsCatalogOpen((prev) => !prev)}
+                      >
+                        <p className="text-2xl font-bold text-yellow-300 hover:scale-105 transition-transform duration-200">
+                          {link.title}
+                        </p>
+                        <BsChevronDown
+                          className={`transition-transform ${
+                            isCatalogOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                      </div>
+                      {isCatalogOpen && (
+                        <ul className="mt-4 space-y-2">
+                          {loading ? (
+                            <li className="text-center text-yellow-300">Loading...</li>
+                          ) : subLinks && subLinks.length ? (
+                            subLinks
+                              .filter((subLink) => subLink?.courses?.length > 0)
+                              .map((subLink, i) => (
+                                <li key={i}>
+                                  <Link
+                                    to={`/catalog/${subLink.name
+                                      .split(" ")
+                                      .join("-")
+                                      .toLowerCase()}`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block text-yellow-300 hover:underline"
+                                  >
+                                    {subLink.name}
+                                  </Link>
+                                </li>
+                              ))
+                          ) : (
+                            <li className="text-center text-yellow-300">No Courses Found</li>
+                          )}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      to={link?.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <p
+                        className={`text-2xl font-bold text-yellow-300 hover:scale-105 transition-transform duration-200 ${
+                          matchRoute(link?.path) && link.title !== "Contact Us"
+                            ? "underline decoration-yellow-400"
+                            : ""
+                        }`}
+                      >
+                        {link.title}
+                      </p>
+                    </Link>
+                  )}
+                </li>
+              ))}
+              {/* Add Login/Signup buttons in mobile menu */}
+              {token === null && (
+                <>
+                  <li>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      <button className="w-full rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
+                        Log in
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                      <button className="w-full rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
+                        Sign up
+                      </button>
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        )}
         {/* Login / Signup / Dashboard */}
-        <div className="hidden items-center gap-x-4 md:flex">
+        <div className="hidden items-center md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to="/dashboard/cart" className="relative">
               <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
@@ -141,9 +242,12 @@ function Navbar() {
           )}
           {token !== null && <ProfileDropdown />}
         </div>
-        <button className="mr-4 md:hidden">
-          <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
-        </button>
+        <div className="flex items-center gap-0 md:hidden">
+          <button className="mr-2" onClick={toggleMobileMenu}>
+            <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+          </button>
+          {token !== null && <ProfileDropdown />}
+        </div>
       </div>
     </div>
   )

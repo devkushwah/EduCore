@@ -60,17 +60,17 @@ export default function RenderSteps() {
 
   return (
     <>
-      <div className="relative mb-2 flex w-full justify-center">
+      <div className="relative mb-2 flex w-full flex-wrap justify-center md:flex-nowrap">
         {steps.map((item) => (
 
             <React.Fragment key={item.id}>
               
             {/* Ye har step ko unique karne ke liye, aur unique behavior ke liye */}
-            <div className="flex flex-col items-center " key={item.id} >
+            <div className="flex flex-col items-center">
 
                {/* Step Button */}
               <button
-                className={`grid cursor-default aspect-square w-[34px] place-items-center rounded-full border-[1px]
+                className={`grid cursor-default aspect-square w-[28px] place-items-center rounded-full border-[1px] md:w-[34px]
                    ${
                   step === item.id  
                     ? "border-yellow-50 bg-yellow-900 text-yellow-50"  // Current Step (step === item.id)
@@ -89,13 +89,10 @@ export default function RenderSteps() {
             {/* If the current step is completed, the line turns yellow (border-yellow-50). */}
             {/* If it is pending, the line remains gray (border-richblack-500) */}
             {item.id !== steps.length && (
-              <>
-                <div
-                  className={`h-[calc(34px/2)] w-[33%]  border-dashed border-b-2 ${
-                  step > item.id  ? "border-yellow-50" : "border-richblack-500"
-                } `}
-                ></div>
-              </>
+              <div
+                className={`h-[1px] w-[20%] border-dashed border-b-2 md:h-[calc(34px/2)] md:w-[33%]
+                  ${step > item.id ? "border-yellow-50" : "border-richblack-500"}`}
+              ></div>
             )}
             </React.Fragment>
         ))}
@@ -105,19 +102,19 @@ export default function RenderSteps() {
 
 
       {/* Step Titles (Step ke Naam Dikhana): */}
-      <div className="relative mb-16 flex w-full select-none justify-between">
+      <div className="relative mb-8 flex w-full flex-wrap justify-between md:mb-16 md:flex-nowrap">
         {steps.map((item) => (
                     <React.Fragment key={item.id}>
 
             <div
-              className="flex min-w-[130px] flex-col items-center gap-y-2"
+              className="flex min-w-[100px] flex-col items-center gap-y-1 md:min-w-[130px] md:gap-y-2"
               key={item.id}
             >
               
               {/* If the step is active or completed (step >= item.id), the title appears in white (text-richblack-5). */}
               {/* If it is pending, the title appears in gray (text-richblack-500). */}
               <p
-                className={`text-sm ${
+                className={`text-xs md:text-sm ${
                   step >= item.id ? "text-richblack-5" : "text-richblack-500"
                 }`}
               >

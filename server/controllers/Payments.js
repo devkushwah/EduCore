@@ -11,7 +11,7 @@ const { paymentSuccessEmail } = require("../mailTemplates/paymentSuccessEmail")
 const CourseProgress = require("../models/CourseProgress")
 
 // At the top of your file, add this check
-// console.log("Razorpay instance initialized:", !!instance);
+console.log("Razorpay instance initialized:", !!instance);
 // if (!instance) {
 //   console.error("Razorpay instance is undefined");
 // }
@@ -21,6 +21,7 @@ exports.capturePayment = async (req, res) => {
   const { courses } = req.body
   const userId = req.user.id
   console.log("Received courses:", courses);
+  console.log("Request Body:", req.body);
   if (courses.length === 0) {
     return res.json({ success: false, message: "Please Provide Course ID" })
   }
@@ -76,12 +77,14 @@ exports.capturePayment = async (req, res) => {
       key_id: process.env.RAZORPAY_KEY_ID || "not set",
       key_secret: process.env.RAZORPAY_SECRET ? "is set" : "not set"
     });
+    console.log("Razorpay Key ID:", process.env.RAZORPAY_KEY_ID);
+    console.log("Razorpay Secret is set:", !!process.env.RAZORPAY_SECRET);
     
     // Initiate the payment using Razorpay
     console.log("Creating Razorpay order with options:", options);
     // console.log("Razorpay instance:", instance); // Check if instance is defined
     const paymentResponse = await instance.orders.create(options);
-    console.log("Payment response:", paymentResponse);
+    console.log("Payment Response:", paymentResponse);
     res.json({
       success: true,
       data: paymentResponse,
@@ -120,12 +123,15 @@ exports.verifyPayment = async (req, res) => {
     .update(body.toString())
     .digest("hex")
 
+  console.log("Expected Signature:", expectedSignature);
+  console.log("Razorpay Signature:", razorpay_signature);
+
   if (expectedSignature === razorpay_signature) {
     await enrollStudents(courses, userId, res)
     return res.status(200).json({ success: true, message: "Payment Verified" })
   }
 
-  return res.status(200).json({ success: false, message: "Payment Failed" })
+  return res.status(200).json({ success: false, message:  "Payment Failed" })
 }
 
 // Send Payment Success Email

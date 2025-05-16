@@ -1,102 +1,99 @@
-import React from 'react'
-import { useState } from 'react'
-import { VscSignOut } from "react-icons/vsc"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { MdViewSidebar } from "react-icons/md"; // Import new open icon
+import { SlClose } from "react-icons/sl"; // Import new close icon
+import { VscSignOut } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { sidebarLinks } from "../../../data/dashboard-links"
-import { logout } from "../../../services/operations/authAPI"
-import ConfirmationModal from '../../Common/ConfirmationModal'
-import SidebarLink from './SidebarLink'
-
-
+import { sidebarLinks } from "../../../data/dashboard-links";
+import { logout } from "../../../services/operations/authAPI";
+import ConfirmationModal from "../../Common/ConfirmationModal";
+import SidebarLink from "./SidebarLink";
 
 const Sidebar = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user, loading: profileLoading } = useSelector((state) => state.profile);
+  const { loading: authLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { user, loading: profileLoading } = useSelector( (state) => state.profile)
-  const { loading: authLoading } = useSelector( (state) => state.auth)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [confirmationModal, setConfirmationModal] = useState(null);
 
-  // To keep track of confirmation modal, starting me display nahi hoga isliye null rakha hai
-  const [confirmationModal, setConfirmationModal] = useState(null)
-
-
-  // agar dono mese koi bhi loading hui to hum (spinner) use krenge
-  if (profileLoading || authLoading ) {
+  if (profileLoading || authLoading) {
     return (
-      <div className='grid h-[calc(100vh-3.5rem)] min-w-[220px] items-center border-r-[1px] border-r-richblack-700 bg-richblack-800'>
-        <div className='spinner'></div>
+      <div className="grid h-[calc(100vh-3.5rem)] min-w-[220px] items-center border-r-[1px] border-r-richblack-700 bg-richblack-800">
+        <div className="spinner"></div>
       </div>
-    )
+    );
   }
-
-
 
   return (
     <>
-        <div className=''>
-        <div className='flex flex-col'>
-          {/* Ab sidebar links ke liye map loop lagaaynge  aur agar inn links me type object present hai to condition ke hisaab se links ko display krenge aur link samaz nhi aa raha hai to map me check karo kya props diya hai*/}
-          {
-            // data dheko usme instructor aur student ke liye alag alag links hai isliye humne sidebarLinks me type bhi add kiya hai jisse hum student ke type ke hisaab se links show kar sake, jaise data me 6 id's hai usme kuch instructor ke liye hai aur kuch student ke liye, to humne type bhi add kiya hai jisse hum user ke type ke hisaab se links show kar sake, jaise agar user student hai to usko sirf student ke links dikhayenge aur agar instructor hai to usko sirf instructor ke links dikhayenge jaise link.type = instructor jiski 4 id's hai to baaki 2 id's o null krdenge
-            sidebarLinks.map( (link) => {
-              if (link.type && user?.accountType !== link.type) return null
-              // aur agar match ho gaya to hum hum ye sab display karwa denge
-              return (
-                <SidebarLink 
-                key={link.id} 
-                link={link}
-                iconName={link.icon} 
-                />
-              )
-            })
-          }
+      {/* Sidebar toggle icon for smaller screens */}
+      <div
+        className="fixed top-16 left-4 z-50 p-1.5 text-xl text-white bg-yellow-500 rounded-full shadow-md cursor-pointer md:hidden"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? <SlClose /> : <MdViewSidebar />}
+      </div>
 
-        </div>
-        
-        {/* ye spacing dedi*/}
-        <div className='mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-700'></div>
+      {/* Overlay to disable clicks outside the sidebar */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black bg-opacity-50 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
 
-        {/* Ye  Settings ke liye*/}
-        <div className="flex flex-col items-center">
-          <SidebarLink 
-          link={{ name: "Settings", path: "/dashboard/settings" }}
-          iconName="VscSettingsGear"
+      {/* Sidebar container */}
+      <div
+        className={`fixed top-0 left-0 z-40 h-full md:h-[calc(100vh-3.5rem)] w-[220px] overflow-y-auto bg-richblack-800 border-r-[1px] border-richblack-700 transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:relative md:translate-x-0`}
+      >
+        <div className="flex flex-col">
+          {sidebarLinks.map((link) => {
+            if (link.type && user?.accountType !== link.type) return null;
+            return <SidebarLink key={link.id} link={link} iconName={link.icon} />;
+          })}
+
+          {/* Divider */}
+          <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-700"></div>
+
+          {/* Settings link */}
+          <SidebarLink
+            link={{ name: "Settings", path: "/dashboard/settings" }}
+            iconName="VscSettingsGear"
           />
-          {/* Ye logout ke liye */}
-          <button 
-          onClick={() => 
-            setConfirmationModal({
-              text1: "Are you sure?",
-              text2: "You will be logged out of your account.", 
-              btn1Text: "Logout",
-              btn2Text: "Cancel",
-              btn1Handler: () => {
-                dispatch(logout());
-                navigate("/login"); // Manually navigating after logout
-            },
-            
-              btn2Handler: () => setConfirmationModal(null)
-            })}
-            className="px-8 py-2 text-sm font-medium text-richblack-300" 
+
+          {/* Logout button */}
+          <button
+            onClick={() =>
+              setConfirmationModal({
+                text1: "Are you sure?",
+                text2: "You will be logged out of your account.",
+                btn1Text: "Logout",
+                btn2Text: "Cancel",
+                btn1Handler: () => {
+                  dispatch(logout());
+                  navigate("/login");
+                },
+                btn2Handler: () => setConfirmationModal(null),
+              })
+            }
+            className="px-8 py-2 text-sm font-medium text-richblack-300"
           >
             <div className="flex items-center gap-x-2">
-              {/* icon */}
               <VscSignOut className="text-lg" />
-              {/* button */}
               <span>Logout</span>
             </div>
-
           </button>
         </div>
+      </div>
 
-    </div>
-
-    {/* // Agar confirmationModal present hai joki logout button par click karne par  hoga , to hum modal ka props send kr denge */}
-    {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

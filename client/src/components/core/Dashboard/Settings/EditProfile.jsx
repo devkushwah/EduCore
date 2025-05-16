@@ -108,7 +108,8 @@ const EditProfile = () => {
                 </span>
               )}
                 </div>
-
+            </div>
+            <div className='flex flex-col gap-5 lg:flex-row'>
                 <div className='flex flex-col gap-2 lg:w-[48%]'>
                     <label htmlFor="gender" className='lable-style'>Gender</label>
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const courseProgressSchema = new mongoose.Schema({
-  courseId: {
+  courseID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",
     required: true,
@@ -24,6 +24,6 @@ const courseProgressSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Compound index to ensure a user can have only one progress document per course
-courseProgressSchema.index({ courseId: 1, userId: 1 }, { unique: true });
+courseProgressSchema.index({ courseID: 1, userId: 1 }, { unique: true });
 
 module.exports = mongoose.model("CourseProgress", courseProgressSchema);

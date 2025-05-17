@@ -345,6 +345,7 @@ export const getFullDetailsOfCourse = async (courseId, token) => {
 export const markLectureAsComplete = async (data, token) => {
   let result = null
   console.log("mark complete data", data)
+  console.log("LECTURE_COMPLETION_API:", LECTURE_COMPLETION_API)
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", LECTURE_COMPLETION_API, data, {
@@ -362,7 +363,41 @@ export const markLectureAsComplete = async (data, token) => {
     result = true
   } catch (error) {
     console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR............", error)
-    toast.error(error.message)
+    toast.error(
+      error?.response?.data?.error ||
+        error?.response?.data?.message ||
+        error.message
+    )
+    result = false
+  }
+  toast.dismiss(toastId)
+  return result
+}
+
+// unmark a lecture as complete
+export const unmarkLectureAsComplete = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector(
+      "POST",
+      courseEndpoints.UNMARK_LECTURE_COMPLETION_API, // use the correct endpoint
+      data,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+    if (!response.data.message) {
+      throw new Error(response.data.error)
+    }
+    toast.success("Lecture marked as incomplete")
+    result = true
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.error ||
+        error?.response?.data?.message ||
+        error.message
+    )
     result = false
   }
   toast.dismiss(toastId)

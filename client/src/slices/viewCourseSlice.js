@@ -25,7 +25,14 @@ const viewCourseSlice = createSlice({
       state.completedLectures = action.payload
     },
     updateCompletedLectures: (state, action) => {
-      state.completedLectures = [...state.completedLectures, action.payload]
+      const id = action.payload
+      if (state.completedLectures.includes(id)) {
+        // Remove if already present (unmark)
+        state.completedLectures = state.completedLectures.filter((lid) => lid !== id)
+      } else {
+        // Add if not present (mark)
+        state.completedLectures.push(id)
+      }
     },
   },
 })

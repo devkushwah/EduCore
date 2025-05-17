@@ -17,15 +17,16 @@ exports.updateCourseProgress = async (req, res) => {
 
     // Find the course progress document for the user and course
     let courseProgress = await CourseProgress.findOne({
-      courseId: courseId, // Correct field name
+      courseID: courseId, // Correct field name
       userId: userId,
     })
 
     if (!courseProgress) {
       // If course progress doesn't exist, create a new one
-      return res.status(404).json({
-        success: false,
-        message: "Course progress Does Not Exist",
+      courseProgress = await CourseProgress.create({
+        courseID: courseId,
+        userId: userId,
+        completedVideos: [subsectionId],
       })
     } else {
       // If course progress exists, check if the subsection is already completed
@@ -35,12 +36,41 @@ exports.updateCourseProgress = async (req, res) => {
 
       // Push the subsection into the completedVideos array
       courseProgress.completedVideos.push(subsectionId)
+      await courseProgress.save()
     }
 
-    // Save the updated course progress
+    // Save the updated course progress (already saved above if new)
+    return res.status(200).json({ message: "Course progress updated" })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ error: "Internal server error" })
+  }
+}
+
+exports.unmarkLectureAsComplete = async (req, res) => {
+  const { courseId, subsectionId } = req.body
+  const userId = req.user.id
+
+  try {
+    // Find the course progress document for the user and course
+    let courseProgress = await CourseProgress.findOne({
+      courseID: courseId,
+      userId: userId,
+    })
+
+    if (!courseProgress) {
+      return res.status(404).json({ error: "Course progress not found" })
+    }
+
+    // Remove the subsection from completedVideos array if present
+    const index = courseProgress.completedVideos.indexOf(subsectionId)
+    if (index === -1) {
+      return res.status(400).json({ error: "Subsection not marked as completed" })
+    }
+    courseProgress.completedVideos.splice(index, 1)
     await courseProgress.save()
 
-    return res.status(200).json({ message: "Course progress updated" })
+    return res.status(200).json({ message: "Lecture unmarked as complete" })
   } catch (error) {
     console.error(error)
     return res.status(500).json({ error: "Internal server error" })

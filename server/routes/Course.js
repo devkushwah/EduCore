@@ -41,7 +41,8 @@ const {
 
 
 const {
-  updateCourseProgress
+  updateCourseProgress,
+  unmarkLectureAsComplete, // add this import
 } = require("../controllers/courseProgress");
 
 
@@ -100,7 +101,7 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
 router.post("/addSubSection", auth, isInstructor, createSubSection)
 
 router.post("/updateCourseProgress", auth, isStudent,  updateCourseProgress);
-
+router.post("/unmarkLectureAsComplete", auth, isStudent, unmarkLectureAsComplete);
 
 
 // ********************************************************************************************************

@@ -121,98 +121,119 @@ function Navbar() {
         </nav>
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="fixed top-0 left-0 z-50 w-full h-screen bg-transparent backdrop-blur-md p-6 overflow-y-auto md:hidden">
-            {/* Close Icon */}
-            <button
-              className="absolute top-4 right-4 text-2xl text-yellow-300"
+          <>
+            {/* Overlay */}
+            <div
+              className="fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300 md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
-            >
-              ✖
-            </button>
-            <ul className="flex flex-col items-center gap-y-12 text-richblack-25">
-              {NavbarLinks.map((link, index) => (
-                <li key={index}>
-                  {link.title === "Catalog" ? (
-                    <>
-                      <div
-                        className="flex items-center justify-between cursor-pointer"
-                        onClick={() => setIsCatalogOpen((prev) => !prev)}
+            />
+            {/* Slide-in Menu */}
+            <div className="fixed top-0 right-0 z-50 h-full w-4/5 max-w-xs bg-richblack-900 rounded-l-2xl shadow-2xl p-6 overflow-y-auto transform transition-transform duration-300 md:hidden animate-slide-in">
+              {/* Close Icon */}
+              <button
+                className="absolute top-4 right-4 text-3xl text-yellow-300 hover:text-yellow-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                ✖
+              </button>
+              <ul className="flex flex-col items-start gap-y-10 mt-10 text-richblack-25">
+                {NavbarLinks.map((link, index) => (
+                  <li key={index} className="w-full">
+                    {link.title === "Catalog" ? (
+                      <>
+                        <div
+                          className="flex items-center justify-between cursor-pointer px-2 py-2 rounded-lg hover:bg-richblack-800 transition"
+                          onClick={() => setIsCatalogOpen((prev) => !prev)}
+                        >
+                          <p className="text-xl font-bold text-yellow-300">
+                            {link.title}
+                          </p>
+                          <BsChevronDown
+                            className={`ml-2 text-lg transition-transform ${
+                              isCatalogOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </div>
+                        {isCatalogOpen && (
+                          <ul className="mt-2 ml-4 space-y-2 bg-richblack-800 rounded-lg p-3 shadow-inner">
+                            {loading ? (
+                              <li className="text-center text-yellow-300">Loading...</li>
+                            ) : subLinks && subLinks.length ? (
+                              subLinks
+                                .filter((subLink) => subLink?.courses?.length > 0)
+                                .map((subLink, i) => (
+                                  <li key={i}>
+                                    <Link
+                                      to={`/catalog/${subLink.name
+                                        .split(" ")
+                                        .join("-")
+                                        .toLowerCase()}`}
+                                      onClick={() => setIsMobileMenuOpen(false)}
+                                      className="block text-yellow-200 hover:text-yellow-400 px-2 py-1 rounded transition"
+                                    >
+                                      {subLink.name}
+                                    </Link>
+                                  </li>
+                                ))
+                            ) : (
+                              <li className="text-center text-yellow-300">No Courses Found</li>
+                            )}
+                          </ul>
+                        )}
+                      </>
+                    ) : (
+                      <Link
+                        to={link?.path}
+                        onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        <p className="text-2xl font-bold text-yellow-300 hover:scale-105 transition-transform duration-200">
+                        <p
+                          className={`text-xl font-bold text-yellow-300 px-2 py-2 rounded-lg hover:bg-richblack-800 hover:scale-105 transition-all duration-200 ${
+                            matchRoute(link?.path) && link.title !== "Contact Us"
+                              ? "underline decoration-yellow-400"
+                              : ""
+                          }`}
+                        >
                           {link.title}
                         </p>
-                        <BsChevronDown
-                          className={`transition-transform ${
-                            isCatalogOpen ? "rotate-180" : ""
-                          }`}
-                        />
-                      </div>
-                      {isCatalogOpen && (
-                        <ul className="mt-4 space-y-2">
-                          {loading ? (
-                            <li className="text-center text-yellow-300">Loading...</li>
-                          ) : subLinks && subLinks.length ? (
-                            subLinks
-                              .filter((subLink) => subLink?.courses?.length > 0)
-                              .map((subLink, i) => (
-                                <li key={i}>
-                                  <Link
-                                    to={`/catalog/${subLink.name
-                                      .split(" ")
-                                      .join("-")
-                                      .toLowerCase()}`}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="block text-yellow-300 hover:underline"
-                                  >
-                                    {subLink.name}
-                                  </Link>
-                                </li>
-                              ))
-                          ) : (
-                            <li className="text-center text-yellow-300">No Courses Found</li>
-                          )}
-                        </ul>
-                      )}
-                    </>
-                  ) : (
-                    <Link
-                      to={link?.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <p
-                        className={`text-2xl font-bold text-yellow-300 hover:scale-105 transition-transform duration-200 ${
-                          matchRoute(link?.path) && link.title !== "Contact Us"
-                            ? "underline decoration-yellow-400"
-                            : ""
-                        }`}
-                      >
-                        {link.title}
-                      </p>
-                    </Link>
-                  )}
-                </li>
-              ))}
-              {/* Add Login/Signup buttons in mobile menu */}
-              {token === null && (
-                <>
-                  <li>
-                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                      <button className="w-full rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
-                        Log in
-                      </button>
-                    </Link>
+                      </Link>
+                    )}
                   </li>
-                  <li>
-                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                      <button className="w-full rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
-                        Sign up
-                      </button>
-                    </Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
+                ))}
+                {/* Add Login/Signup buttons in mobile menu */}
+                {token === null && (
+                  <>
+                    <li className="w-full">
+                      <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                        <button className="w-full rounded-[8px] border border-yellow-400 bg-richblack-800 px-[12px] py-[10px] text-yellow-200 font-semibold hover:bg-yellow-400 hover:text-richblack-900 transition">
+                          Log in
+                        </button>
+                      </Link>
+                    </li>
+                    <li className="w-full">
+                      <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                        <button className="w-full rounded-[8px] border border-yellow-400 bg-richblack-800 px-[12px] py-[10px] text-yellow-200 font-semibold hover:bg-yellow-400 hover:text-richblack-900 transition">
+                          Sign up
+                        </button>
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+            {/* Animation keyframes */}
+            <style>
+              {`
+                @keyframes slideInRight {
+                  from { transform: translateX(100%); }
+                  to { transform: translateX(0); }
+                }
+                .animate-slide-in {
+                  animation: slideInRight 0.3s cubic-bezier(0.4,0,0.2,1);
+                }
+              `}
+            </style>
+          </>
         )}
         {/* Login / Signup / Dashboard */}
         <div className="hidden items-center md:flex">

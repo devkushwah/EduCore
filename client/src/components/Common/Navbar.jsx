@@ -6,9 +6,9 @@ import { Link, matchPath, useLocation } from "react-router-dom"
 
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { NavbarLinks } from "../../data/navbar-links"
-import { apiConnector } from "../../services/apiconnector"
+import { apiConnector } from "../../services/apiconnector"  
 import { categories } from "../../services/apis"
-import { ACCOUNT_TYPE } from "../../utils/constants"
+import { ACCOUNT_TYPE } from "../../utils/constants" 
 import ProfileDropdown from "../core/Auth/ProfileDropDown"
 
 function Navbar() {
@@ -238,7 +238,7 @@ function Navbar() {
         {/* Login / Signup / Dashboard */}
         <div className="hidden items-center md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-            <Link to="/dashboard/cart" className="relative">
+            <Link to="/dashboard/cart" className="relative mr-4">
               <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
               {totalItems > 0 && (
                 <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
@@ -256,7 +256,7 @@ function Navbar() {
           )}
           {token === null && (
             <Link to="/signup">
-              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
+              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 ml-3">
                 Sign up
               </button>
             </Link>

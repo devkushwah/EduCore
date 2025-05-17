@@ -11,7 +11,7 @@ const { paymentSuccessEmail } = require("../mailTemplates/paymentSuccessEmail")
 const CourseProgress = require("../models/CourseProgress")
 
 // At the top of your file, add this check
-console.log("Razorpay instance initialized:", !!instance);
+console.log("Razorpay instance initialized:", !!instance); 
 // if (!instance) {
 //   console.error("Razorpay instance is undefined");
 // }

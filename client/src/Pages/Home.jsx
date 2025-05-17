@@ -9,7 +9,7 @@ import TimelineSection from "../components/core/HomePage/TimelineSection"
 import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection"
 import InstructorSection from "../components/core/HomePage/InstructorSection";
 import Footer from "../components/Common/Footer";
-import ExploreMore from "../components/core/HomePage/ExploreMore";
+import ExploreMore from "../components/core/HomePage/ExploreMore"; 
 
 const Home = () => {
   return (
@@ -61,9 +61,9 @@ const Home = () => {
         </div>
 
         {/* Video */}
-        <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+        <div className="mx-3 my-7 flex justify-center shadow-[10px_-5px_50px_-5px] shadow-blue-200">
           <video
-            className="shadow-[20px_20px_rgba(255,255,255)]"
+            className="shadow-[20px_20px_rgba(255,255,255)] max-w-[550px] w-full rounded-lg"
             muted
             loop
             autoPlay
@@ -113,7 +113,7 @@ const Home = () => {
               </div>
             }
             subheading={
-              "Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love."
+              "Instructors from around the world teach millions of students on Educore. We provide the tools and skills to teach what you love."
             }
             ctabtn1={{
               btnText: "Try it yourself",
@@ -172,7 +172,7 @@ const Home = () => {
 
                     <div className="flex flex-col gap-10  items-start lg:w-[40%]">
                         <div className="text-[16px]">
-                            Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love.
+                            Instructors from around the world teach millions of students on Educore. We provide the tools and skills to teach what you love.
                         </div>
                         <CTAButton active={true} linkto={"/signup"}>
                             <div>

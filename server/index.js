@@ -40,6 +40,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://edu-core-5vrbiqmjr-dev-kushwahs-projects.vercel.app/",
+      "https://edu-core-hvek56nks-dev-kushwahs-projects.vercel.app",
     ],
     credentials: true,
   })

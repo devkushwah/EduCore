@@ -89,9 +89,11 @@ app.get("/", (req, res) => {
 
 /*
 STEP 9: Server Start
-- Specified PORT par server ko start karna
+- Remove app.listen for Vercel serverless deployment
 */
-app.listen(PORT, () => {
-  console.log(`App is running at ${PORT}`); 
-});
+
+/*
+STEP 10: Export Express app for Vercel
+*/
+module.exports = app;
 

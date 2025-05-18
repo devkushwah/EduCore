@@ -37,7 +37,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://edu-core-5vrbiqmjr-dev-kushwahs-projects.vercel.app/",
+    ],
     credentials: true,
   })
 );

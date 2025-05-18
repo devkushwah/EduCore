@@ -39,8 +39,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://edu-core-5vrbiqmjr-dev-kushwahs-projects.vercel.app/",
-      "https://edu-core-hvek56nks-dev-kushwahs-projects.vercel.app",
+      /\.vercel\.app$/, // allow all vercel.app subdomains
     ],
     credentials: true,
   })

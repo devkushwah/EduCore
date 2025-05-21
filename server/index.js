@@ -98,6 +98,6 @@ if (require.main === module) {
   });
 } else {
   // Export app for Vercel
-  module.exports = app;  
+  module.exports = app;     
 }
 

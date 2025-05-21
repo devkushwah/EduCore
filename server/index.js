@@ -39,7 +39,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      /\.vercel\.app$/, // allow all vercel.app subdomains
+      /\.vercel\.app$/, // allow all vercel.app subdomains 
     ],
     credentials: true,
   })
@@ -90,13 +90,14 @@ app.get("/", (req, res) => {
   });
 });
 
-/*
-STEP 9: Server Start
-- Remove app.listen for Vercel serverless deployment
-*/
 
-/*
-STEP 10: Export Express app for Vercel
-*/
-module.exports = app;
+if (require.main === module) {
+  // Server running directly (local development)
+  app.listen(PORT, () => {
+    console.log(`App is running at port ${PORT}`);
+  });
+} else {
+  // Export app for Vercel
+  module.exports = app;  
+}
 

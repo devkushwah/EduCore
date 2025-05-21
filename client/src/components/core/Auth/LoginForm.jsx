@@ -21,6 +21,17 @@ function LoginForm() {
 
   const { email, password } = formData
 
+  // Validation functions
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const validatePassword = (password) => {
+    // For login, we'll just check if the password is not empty
+    return password.trim() !== ""
+  }
+
   const handleOnChange = (event) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -30,6 +41,19 @@ function LoginForm() {
 
   const handleOnSubmit = (event) => {
     event.preventDefault()
+    
+    // Email validation
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address")
+      return
+    }
+
+    // Password validation
+    if (!validatePassword(password)) {
+      toast.error("Password cannot be empty")
+      return
+    }
+
     dispatch(login(email, password, navigate))
     toast.success("Logged In")
     // navigate("/dashboard")

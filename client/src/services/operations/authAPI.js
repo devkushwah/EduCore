@@ -16,26 +16,54 @@ const {
 
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
+    const toastId = toast.loading("Sending OTP...")
     dispatch(setLoading(true))
     try {
+      console.log("Sending OTP request to:", SENDOTP_API)
+      console.log("With email:", email)
+      
+      if (!email) {
+        throw new Error("Email is required");
+      }
+      
       const response = await apiConnector("POST", SENDOTP_API, {
         email,
         checkUserPresent: true,
       })
       console.log("SENDOTP API RESPONSE............", response)
+      console.log("Full response data:", JSON.stringify(response.data))
 
-      console.log(response.data.success)
-
-      if (!response.data.success) {
-        throw new Error(response.data.message)
+      // Check if response contains data property
+      if (!response.data) {
+        throw new Error("No response data received")
       }
 
+      console.log("Response success status:", response.data.success)
+      console.log("Response message:", response.data.message)
+
+      if (!response.data.success) {
+        throw new Error(response.data.message || "Failed to send OTP")
+      }
+
+      // Show more detailed information to user including the OTP
       toast.success("OTP Sent Successfully")
-      navigate("/verify-email")
+         
+      toast.success("Please check your email(delivery may take a few minutes)")
+      
+      // Only navigate if navigate function is provided
+      if (navigate) {
+        navigate("/verify-email")
+      }
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
+      // Display the specific error message from the server if available
+      const errorMessage = error.response?.data?.message || error.message || "Could Not Send OTP"
+      toast.error(errorMessage)
+      
+      // If navigate is provided, go back to signup page on error
+      if (navigate) {
+        navigate("/signup")
+      }
     }
     dispatch(setLoading(false))
     toast.dismiss(toastId)

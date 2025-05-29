@@ -50,11 +50,11 @@ const ChangeProfilePicture = () => {
 
     const handleFileUpload = () => {
         try {
-            console.log("oploading.....");
+            console.log("uploading.....");
             setLoading(true)
             // formdata: Image file ko backend me bhejne ke liye multipart form data format me set karta hai.
             const formData = new FormData()
-            formData.append("image", imageFile)
+            formData.append("displayPicture", imageFile)
             // console.log("formData", formData)
             // dispatch(updateDisplayPicture): Redux action ke through backend ko request bhejta hai.
             dispatch(updateDisplayPicture(token, formData)).then(() => {

@@ -42,6 +42,7 @@ app.use(
       /\.vercel\.app$/, // allow all vercel.app subdomains 
       'https://edu-core-git-main-dev-kushwahs-projects.vercel.app',
       'https://edu-core-omega.vercel.app',
+      'https://edu-core-snowy.vercel.app'
     ],
     credentials: true,
   })

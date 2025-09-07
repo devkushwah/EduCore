@@ -3,6 +3,9 @@ const User =  require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 
 //resetPasswordToken
 
@@ -38,7 +41,11 @@ exports.resetPasswordToken = async (req, res) => {
                                           {new: true} );
         
         // create URL
-        const url = `http://localhost:3000/update-password/${token}`
+        // Purana: const url = `http://localhost:3000/update-password/${token}`
+
+        // Naya:
+        const baseUrl = process.env.BASE_URL || 'http://localhost:3000';  // Local ke liye fallback
+        const url = `${baseUrl}/update-password/${token}`;
         
         // send mail containing the URL
         await mailSender(email,

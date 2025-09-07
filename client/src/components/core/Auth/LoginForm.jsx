@@ -55,7 +55,7 @@ function LoginForm() {
     }
 
     dispatch(login(email, password, navigate))
-    toast.success("Logged In")
+    // toast.success("Logged In")
     // navigate("/dashboard")
   }
 

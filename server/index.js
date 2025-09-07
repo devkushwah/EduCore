@@ -40,6 +40,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       /\.vercel\.app$/, // allow all vercel.app subdomains 
+      'https://edu-core-git-main-dev-kushwahs-projects.vercel.app',
+      'https://edu-core-omega.vercel.app',
     ],
     credentials: true,
   })

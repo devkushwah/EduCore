@@ -49,6 +49,11 @@ export default function UpdatePassword() {
 
     try {
       await changePassword(token, data)
+      // After successful password change, redirect to login
+      toast.success("Password changed successfully! Please login again.")
+      setTimeout(() => {
+        navigate("/login")
+      }, 2000) // Wait 2 seconds for user to read the success message
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }

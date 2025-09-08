@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../services/operations/authAPI';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
@@ -17,6 +17,7 @@ const UpdatePassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { password, confirmPassword } = formData;
 
@@ -50,7 +51,7 @@ const UpdatePassword = () => {
     }
 
     const token = location.pathname.split("/").at(-1);
-    dispatch(resetPassword(password, confirmPassword, token));
+    dispatch(resetPassword(password, confirmPassword, token, navigate));
   };
 
   return (

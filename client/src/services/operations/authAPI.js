@@ -183,7 +183,7 @@ export function getPasswordResetToken(email , setEmailSent) {
   }
 }
 
-export function resetPassword(password, confirmPassword, token) {
+export function resetPassword(password, confirmPassword, token, navigate) {
   return async(dispatch) => {
     dispatch(setLoading(true));
     try{
@@ -191,12 +191,13 @@ export function resetPassword(password, confirmPassword, token) {
 
       console.log("RESET Password RESPONSE ... ", response);
 
-
       if(!response.data.success) {
         throw new Error(response.data.message);
       }
 
       toast.success("Password has been reset successfully");
+      // Navigate to login page after successful password reset
+      navigate("/login");
     }
     catch(error) {
       console.log("RESET PASSWORD TOKEN Error", error);

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-hot-toast"
 
 import { changePassword } from "../../../../services/operations/SettingsAPI"
 import IconBtn from "../../../Common/IconBtn"
@@ -14,6 +15,13 @@ export default function UpdatePassword() {
   const [showOldPassword, setShowOldPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
 
+  // Validation functions
+  const validatePassword = (password) => {
+    // Minimum 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    return passwordRegex.test(password)
+  }
+
   const {
     register,
     handleSubmit,
@@ -21,7 +29,24 @@ export default function UpdatePassword() {
   } = useForm()
 
   const submitPasswordForm = async (data) => {
-    // console.log("password Data - ", data)
+    // Validate old password (should not be empty)
+    if (!data.oldPassword || data.oldPassword.trim() === "") {
+      toast.error("Current password is required")
+      return
+    }
+
+    // Validate new password
+    if (!validatePassword(data.newPassword)) {
+      toast.error("New password must contain at least 8 characters, including uppercase, lowercase, number and special character")
+      return
+    }
+
+    // Check if old and new password are same
+    if (data.oldPassword === data.newPassword) {
+      toast.error("New password must be different from current password")
+      return
+    }
+
     try {
       await changePassword(token, data)
     } catch (error) {

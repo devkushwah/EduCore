@@ -4,6 +4,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { resetPassword } from '../services/operations/authAPI';
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
+import { toast } from "react-hot-toast";
 
 const UpdatePassword = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,13 @@ const UpdatePassword = () => {
 
   const { password, confirmPassword } = formData;
 
+  // Validation functions
+  const validatePassword = (password) => {
+    // Minimum 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    return passwordRegex.test(password)
+  }
+
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -28,9 +36,21 @@ const UpdatePassword = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    
+    // Password validation
+    if (!validatePassword(password)) {
+      toast.error("Password must contain at least 8 characters, including uppercase, lowercase, number and special character")
+      return
+    }
+
+    // Confirm password validation
+    if (password !== confirmPassword) {
+      toast.error("Passwords Do Not Match")
+      return
+    }
+
     const token = location.pathname.split("/").at(-1);
     dispatch(resetPassword(password, confirmPassword, token));
-    console.log(formData);
   };
 
   return (

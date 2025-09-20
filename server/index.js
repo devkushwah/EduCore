@@ -11,7 +11,7 @@ STEP 2: Configuration Setup
 - Third-party middlewares import (cookie-parser, cors, cloudinary, file-upload)
 - Environment variables setup (.env file se PORT number fetch)
 */
-const database = require("./config/database");
+const database = require("./config/database"); 
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { cloudinaryConnect } = require("./config/cloudinary");

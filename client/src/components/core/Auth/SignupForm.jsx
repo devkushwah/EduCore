@@ -37,9 +37,8 @@ function SignupForm() {
   }
 
   const validatePassword = (password) => {
-    // Minimum 8 characters, 1 uppercase, 1 lowercase, 1 special character
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-    return passwordRegex.test(password)
+    // Minimum 8 characters only
+    return password.length >= 8
   }
 
   // Handle input fields, when some value changes
@@ -62,7 +61,7 @@ function SignupForm() {
 
     // Password validation
     if (!validatePassword(password)) {
-      toast.error("Password must contain at least 8 characters, including uppercase, lowercase, number and special character")
+      toast.error("Password must be at least 8 characters long")
       return
     }
 

@@ -28,8 +28,8 @@ function LoginForm() {
   }
 
   const validatePassword = (password) => {
-    // For login, we'll just check if the password is not empty
-    return password.trim() !== ""
+    // Minimum 8 characters only
+    return password.length >= 8
   }
 
   const handleOnChange = (event) => {
@@ -50,7 +50,7 @@ function LoginForm() {
 
     // Password validation
     if (!validatePassword(password)) {
-      toast.error("Password cannot be empty")
+      toast.error("Password must be at least 8 characters long")
       return
     }
 
